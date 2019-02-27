@@ -13,9 +13,7 @@ type Graph struct {
 
 type vertex struct {
   val string
-  position int
   explored bool
-  scc int
 	outgoing *LinkedList
   incoming *LinkedList
 }
@@ -48,7 +46,7 @@ func (g *Graph) PrintEdges() {
 }
 
 func newVertex(val string) *vertex {
-  return &vertex{val: val, position: 0, explored: false, scc: 0, outgoing: NewLinkedList(), incoming: NewLinkedList()}
+  return &vertex{val: val, explored: false, outgoing: NewLinkedList(), incoming: NewLinkedList()}
 }
 
 func (g *Graph) VertexExists(val string) bool {
@@ -194,7 +192,6 @@ func (g *Graph) DfsScc(v *vertex, numScc int) int {
 
     if currentVertex.explored == false {
       currentVertex.explored = true
-      currentVertex.scc = numScc
       size += 1
        for n := currentVertex.outgoing.head; n != nil; n = n.next {
          vertex := n.value

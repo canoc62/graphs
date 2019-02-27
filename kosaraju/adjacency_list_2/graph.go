@@ -12,9 +12,7 @@ type Graph struct {
 
 type vertex struct {
   value string
-  position int
   explored bool
-  scc int
 	outgoing *[]*vertex
   incoming *[]*vertex
 }
@@ -28,7 +26,7 @@ func NewGraph() *Graph {
 func newVertex(value string) *vertex {
   outgoing := make([]*vertex, 0)
   incoming := make([]*vertex, 0)
-  return &vertex{value: value, position: 0, explored: false, scc: 0, outgoing: &outgoing, incoming: &incoming}
+  return &vertex{value: value, explored: false, outgoing: &outgoing, incoming: &incoming}
 }
 
 func (g *Graph) VertexExists(value string) bool {
@@ -152,7 +150,6 @@ func (g *Graph) dfsScc(v *vertex, numScc int) int {
 
     if currentVertex.explored == false {
       currentVertex.explored = true
-      currentVertex.scc = numScc
       size += 1
       for _, vertex := range *currentVertex.outgoing {
         stack = append(stack, vertex)
